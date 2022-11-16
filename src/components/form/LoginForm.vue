@@ -9,8 +9,8 @@
                 <span class="warning-section">
                     {{ queryMessage }}
                 </span>
-                <input-cmp placeholder="Пароль" 
-                @emit-value="emitPassword" />
+                <input-cmp type="password" placeholder="Пароль" 
+                    @emit-value="emitPassword" />
                 <span class="warning-section">
                     {{ queryMessage }}    
                 </span>

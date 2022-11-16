@@ -1,7 +1,7 @@
 <template>
     <input class="input" 
         v-model="value"
-        type="text" 
+        :type="type" 
         name="" 
         id=""
         :placeholder="placeholder"
@@ -12,6 +12,7 @@
 
     export default {
        props: {
+            type: { type: String, default: 'input' },
             placeholder: { type: String, default: 'placeholder'}
        },
 

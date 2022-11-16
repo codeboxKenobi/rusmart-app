@@ -1,0 +1,66 @@
+$main-dark: rgb(8, 8, 8);
+$main-light: rgb(241, 241, 241);
+$warning-color: rgb(199, 43, 43);
+
+$main-backdrop: rgba(8, 8, 8, 0.5);
+$main-hover-grey: rgba(145, 145, 145, 0.2);
+
+
+$main-border-dark1: 1px solid $main-dark;
+$main-border-dark2: 2px solid $main-dark;
+$main-border-light1: 1px solid $main-light;
+$main-border-red1: 1px solid $warning-color;
+$main-border-red2: 2px solid $warning-color;
+
+@mixin flexRow( $jc, $ai ) {
+    display: flex;
+    justify-content: $jc;
+    align-items: $ai;
+}
+
+@mixin flexCol( $jc, $ai ) {
+    display: flex;
+    flex-direction: column;
+    justify-content: $jc;
+    align-items: $ai;
+}
+
+.ml-5 {
+    margin-left: 5px;
+}
+
+.mr--5 {
+    margin-right: -5px;
+}
+
+.mt-10:not(:first-child) {
+    margin-top: 15px;
+}
+
+.field-description {
+    font-size: 16px;
+    font-weight: normal;
+    font-family:sans-serif;
+    color: $main-dark;
+}
+
+.field-description-small {
+    font-size: 10px;
+    font-weight: normal;
+    font-family:sans-serif;
+    color: $main-dark;
+}
+
+.service-item-value {
+    font-size: 12px;
+    font-weight: normal;
+    font-family:sans-serif;
+    color: $main-dark;
+}
+
+.col-y {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}

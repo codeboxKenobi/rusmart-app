@@ -4,21 +4,24 @@
                 Регистрация
             </div>
             <div class="form-input-section">
-                <input-cmp placeholder="Почта" />
+                <input-cmp placeholder="Почта"
+                    @emit-value="emitEmail" />
                 <span class="warning-section">
-                    {{ warningMessage }}
+                    {{ queryMessage }}
                 </span>
-                <input-cmp placeholder="Пароль" />
+                <input-cmp placeholder="Пароль"
+                    @emit-value="emitPassword" />
                 <span class="warning-section">
-                    {{ warningMessage }}
+                    {{ queryMessage }}
                 </span>
-                <input-cmp placeholder="Повторите пароль" />
+                <input-cmp placeholder="Повторите пароль"
+                    @emit-value="emitPasswordConfirm" />
                 <span class="warning-section">
-                    {{ warningMessage }}
+                    {{ queryMessage }}
                 </span>
             </div>
             <div class="form-button-section">
-                <button-cmp name="Зарегистрироваться" />
+                <button-cmp name="Зарегистрироваться" @click-handler="regUser" />
                 <button-cmp name="Отмена" @click-handler="$emit( 'cancel-reg' )" />
             </div>
         </form>
@@ -31,11 +34,76 @@ import ButtonCmp from '../UI/ButtonCmp.vue';
 export default {
         data() {
             return {
-                warningMessage: '* Все поля должны быть заполнены'
+                baseReg: 'http://localhost:7000/api/registration',
+                queryMessage: '* Все поля должны быть заполнены',
+
+                inputData: {
+                    email: '',
+                    password: '',
+                    passwordConfirm: ''
+                },
             }
         },
 
-    
+        methods: {
+            emitEmail( data ) {
+                console.log( 'Email :', data );
+                this.inputData.email = data
+            },
+
+            emitPassword( data ) {
+                console.log( 'Password :', data );
+                this.inputData.password = data
+            },
+
+            emitPasswordConfirm( data ) {
+                console.log( 'Password Confirm :', data );
+
+                if ( this.inputData.password === data ) {
+                    this.inputData.passwordConfirm = data
+                }
+               
+            },
+
+            async regUser() {
+                console.log( this.inputData );
+
+                if ( this.inputData.email !== '' 
+                    && this.inputData.password !== '' 
+                    && this.inputData.passwordConfirm !== '' ) {
+
+                    try {
+                        const response = await fetch( this.baseReg, {
+                            method: 'POST',
+                            mode: 'cors',
+                            cache: 'no-cache',
+                            credentials: 'same-origin', 
+
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+
+                        body: JSON.stringify( this.inputData )
+                        
+                } );
+
+                        const respData = await response.json();
+                        console.log(respData);
+         
+                        this.queryMessage = respData.message;
+
+                    } catch ( error ) {
+                        console.log( error );
+                        this.notValid = true
+                    }
+                } else {
+                    this.queryMessage = 'Некорректный ввод';
+                }
+
+                this.messageOff( 3000 );
+            }
+        },
+
         components: {
             InputCmp,
             ButtonCmp

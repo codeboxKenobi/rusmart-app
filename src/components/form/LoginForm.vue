@@ -37,7 +37,6 @@ export default {
                     password: ''
                 },
 
-                baseReg: 'http://localhost:7000/api/registration',
                 baseUrl: 'http://localhost:7000/api/user',
                 baseLogin: 'http://localhost:7000/api/login',
             }

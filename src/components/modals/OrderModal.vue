@@ -205,7 +205,7 @@ import TextField from '../UI/TextField.vue'
 
         &-section {
             @include flexRow( space-between, center );
-            height: calc( 100% - 50px );
+            height: auto;
             width: 100%;
 
             &-left {

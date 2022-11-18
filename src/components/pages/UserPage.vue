@@ -24,7 +24,7 @@
                 <!-- ORDER ITEM -->
                 <div class="content-order-section-item" 
                     @click="getItemData( elem )"
-                    v-for="( elem, elemIndex ) in  mockOrderData " :key="elemIndex" >
+                    v-for="( elem, elemIndex ) in  orderDataStorage" :key="elemIndex" >
 
                     <div class="content-order-section-item-elems"
                     v-for="( item, itemIndex ) in  Object.entries( elem ) " :key="itemIndex" >
@@ -59,12 +59,26 @@ import { mockOrderData } from '/src/assets/data/mockData.js'
         data() {
             return {
                 baseLogout: 'http://localhost:7000/api/logout',
+                baseOrdersData: 'http://localhost:7000/api/client/all',
 
                 orderData: {},
                 mockOrderData,
                 newModal: false,
-                orderModal: false   
+                orderModal: false,
+
+                orderDataStorage: []
             }
+        },
+
+        async mounted() {
+            const usrKey = localStorage.getItem( 'ssntkn' )
+            const response = await fetch( this.baseOrdersData, {
+                headers: {
+                    Authorization: `Bearer ${ usrKey }`,
+                },
+            } )
+            this.orderDataStorage = await response.json()
+            console.log( this.orderDataStorage );
         },
 
         methods: {

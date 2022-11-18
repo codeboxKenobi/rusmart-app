@@ -1,10 +1,20 @@
 <template>
-    <textarea class="text-area" name="" id=""></textarea>
+    <textarea class="text-area" 
+        name="" 
+        id="" 
+        v-model="value" 
+        @change="$emit( 'emit-value', value )
+        ">
+    </textarea>
 </template>
 
 <script>
     export default {
-        
+        data() {
+            return {
+                value: ''
+            }
+        }
     }
 </script>
 

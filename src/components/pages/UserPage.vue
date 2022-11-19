@@ -1,6 +1,7 @@
 <template>
     <div class="user-page">
         <new-modal v-if="newModal"
+            :size="size"
             @close-new-modal="closeNewOrder" />
 
             <order-modal v-if="orderModal" :orderData="orderData" @close-order-modal="closeOrderModal" />
@@ -27,12 +28,12 @@
                     v-for="( elem, elemIndex ) in  orderDataStorage" :key="elemIndex" >
 
                     <div class="content-order-section-item-elems"
-                    v-for="( item, itemIndex ) in  Object.entries( elem ) " :key="itemIndex" >
+                    v-for="( item, itemIndex ) in Object.values( elem ) " :key="itemIndex" >
                         <span class="content-order-section-item-elems-description">
-                            {{ item[ 0 ] }}
+                            {{ smpl[ itemIndex ] }}
                         </span>
                         <span class="content-order-section-item-elems-value">
-                            {{ item[ 1 ] }}
+                            {{ fieldGenerate( item ) }}
                         </span>
                     </div>
                     
@@ -58,6 +59,19 @@ import { mockOrderData } from '/src/assets/data/mockData.js'
     export default {
         data() {
             return {
+                size: null,
+                smpl: [
+                    'Нoмер заказа',
+                    'Имя',
+                    'Нoмер телефoна',
+                    'Причина oбращеия',
+                    'Тип устрoйства',
+                    'Прoизвoдитель',
+                    'Мoдель',
+
+                ],
+                
+
                 baseLogout: 'http://localhost:7000/api/logout',
                 baseOrdersData: 'http://localhost:7000/api/client/all',
 
@@ -66,11 +80,14 @@ import { mockOrderData } from '/src/assets/data/mockData.js'
                 newModal: false,
                 orderModal: false,
 
-                orderDataStorage: []
+                orderDataStorage: [],
+
+                tmpData: []
             }
         },
 
         async mounted() {
+
             const usrKey = localStorage.getItem( 'ssntkn' )
             const response = await fetch( this.baseOrdersData, {
                 headers: {
@@ -79,9 +96,18 @@ import { mockOrderData } from '/src/assets/data/mockData.js'
             } )
             this.orderDataStorage = await response.json()
             console.log( this.orderDataStorage );
+            this.size = this.orderDataStorage.length;
+
+            console.log( this.orderDataStorage );
         },
 
         methods: {
+            fieldGenerate( sample ) {
+                
+                console.log( sample );   
+                return  sample
+            },
+
             addNewOrder() {
                 this.newModal = true
             },

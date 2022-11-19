@@ -4,7 +4,7 @@
             @close-add-modal="closeAddModal" />
         <div class="order-modal-form">
             <div class="order-modal-form-header">
-                <div class="order-modal-form-header-order">Заказ № {{ orderData[ 'Номер заказа' ] }}</div>
+                <div class="order-modal-form-header-order">Заказ № {{ orderData.client_number }}</div>
                 <div class="order-modal-form-header-closed">
                     <button-cmp name="Закрыть"
                         @click-handler="$emit( 'close-order-modal' )" />
@@ -17,16 +17,16 @@
 
                         <div class="order-modal-form-section-left-inputs-section-bottom col-y">
                             <span class="field-description">Клиент :</span>
-                            <text-field class="mt-10" :fieldData="orderData[ 'Имя' ]" />
-                            <text-field class="mt-10" :fieldData="orderData[ 'Номер телефона' ]" />
+                            <text-field class="mt-10" :fieldData="orderData.client_name" />
+                            <text-field class="mt-10" :fieldData="orderData.client_tel_number" />
                         </div>
                         
                         <div class="order-modal-form-section-left-inputs-section-bottom">
                             <span class="field-description">Устройство :</span>
-                            <text-field class="mt-10" :fieldData="orderData[ 'Причина обращения' ]" />
-                            <text-field class="mt-10" :fieldData="orderData[ 'Тип устройства' ]" />
-                            <text-field class="mt-10" :fieldData="orderData[ 'Производитель' ]" />
-                            <text-field class="mt-10" :fieldData="orderData[ 'Модель' ]" />
+                            <text-field class="mt-10" :fieldData="orderData.client_reason" />
+                            <text-field class="mt-10" :fieldData="orderData.client_device_type" />
+                            <text-field class="mt-10" :fieldData="orderData.client_device_manufacturer" />
+                            <text-field class="mt-10" :fieldData="orderData.client_device_model" />
 
                         </div>
 
@@ -149,6 +149,10 @@ import TextField from '../UI/TextField.vue'
             // InputCmp,
             // TextAreaCmp,
             TextField
+        },
+
+        mounted() {
+            console.log( this.orderData );
         },
 
         methods: {

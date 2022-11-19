@@ -85,26 +85,52 @@ import ButtonCmp from '../UI/ButtonCmp.vue';
 import InputCmp from '../UI/InputCmp.vue';
 import TextAreaCmp from '../UI/TextAreaCmp.vue';
 
+// import { mapData } from '/src/assets/data/maping.js'
+
     export default {
+        props: {
+            size: { type: Number }
+        },
+
         data() {
             return {
                 baseCreateUrl: 'http://localhost:7000/api/client/create',
 
                 newClientData: {
+                    client_number: this.size,
                     client_name: '',
                     client_tel_number: '',
                     client_reason: '',
                     client_device_type: '',
                     client_device_manufacturer: '',
                     client_device_model: '',
+                },
+
+                otherData: {
+                    client_number: this.size,
                     client_approximate_cost_service: '',
                     client_approximate_return_date: '',
                     client_prepayment_amount: '',
                     client_prepayment_method: '',
                     client_interview: '',
                     client_comment: '',
-                }
+                },
+                baseOrdersData: 'http://localhost:7000/api/client/all',
+                orderDataStorage: [],
             }
+        },
+
+        async mounted() {
+
+            const usrKey = localStorage.getItem( 'ssntkn' )
+            const response = await fetch( this.baseOrdersData, {
+                headers: {
+                    Authorization: `Bearer ${ usrKey }`,
+                },
+            } )
+            this.orderDataStorage = await response.json()
+
+            console.log( this.orderDataStorage.length );
         },
 
         components: {
@@ -134,22 +160,22 @@ import TextAreaCmp from '../UI/TextAreaCmp.vue';
                 this.newClientData.client_device_model = data
             },
             emitClientApproximateCost( data ) {
-                this.newClientData.client_approximate_cost_service = data
+                this.otherData.client_approximate_cost_service = data
             },
             emitClientApproximateDate( data ) {
-                this.newClientData.client_approximate_return_date = data
+                this.otherData.client_approximate_return_date = data
             },
             emitClirntPrepaymentAmount( data ) {
-                this.newClientData.client_prepayment_amount = data
+                this.otherData.client_prepayment_amount = data
             },
             emitClientPrepaymentMethod( data ) {
-                this.newClientData.client_prepayment_method = data
+                this.otherData.client_prepayment_method = data
             },
             emitClientInterview( data ) {
-                this.newClientData.client_interview = data
+                this.otherData.client_interview = data
             },
             emitClientComment( data ) {
-                this.newClientData.client_comment = data
+                this.otherData.client_comment = data
             },
             // ---------------------------------------------------
 
